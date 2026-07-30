@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* AZUIS (base da marca) */
+    --navy-deep: #001848;
+    --navy: #003078;
+    --blue: #0060a8;
+    --blue-bright: #0078c8;
+    --blue-glow: #008cdc;
+
+    /* VERDES (seta / acento) */
+    --green-lime: #8cc828;
+    --green: #3c8c14;
+    --green-deep: #146414;
+
+    /* NEUTROS */
+    --white: #ffffff;
+    --off-white: #f5f7fa;
+    --gray-light: #d8d8d8;
+    --gray: #4f4f4f;
+    --ink: #0a1628;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    color: var(--ink);
+    background-color: var(--white);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    Evita rolagem horizontal acidental em telas estreitas.
+    Usamos `clip` em vez de `hidden` de propósito: `overflow-x: hidden` cria um
+    contexto de rolagem que quebra o `position: sticky` do header.
+  */
+  body {
+    overflow-x: clip;
+  }
+}
+
+@layer utilities {
+  /* Compensa o header sticky ao navegar por âncoras */
+  .scroll-offset {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
