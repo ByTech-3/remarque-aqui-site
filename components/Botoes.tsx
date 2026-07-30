@@ -1,11 +1,7 @@
 import { Phone, MessageCircle } from "lucide-react";
-import {
-  TELEFONE_HREF,
-  TELEFONE_EXIBICAO,
-  WHATSAPP_HREF,
-  EVENTO_LIGACAO,
-  EVENTO_WHATSAPP,
-} from "@/lib/contato";
+import LinkConversao from "./LinkConversao";
+import { TELEFONE_HREF, TELEFONE_EXIBICAO, WHATSAPP_HREF } from "@/lib/contato";
+import { EVENTO_LIGACAO, EVENTO_WHATSAPP } from "@/lib/gtm";
 
 type Tamanho = "sm" | "md" | "lg";
 
@@ -35,7 +31,7 @@ type BotaoProps = {
 
 /**
  * CTA primário de ligação. Usa o verde da marca, conforme o CLAUDE.md.
- * O `data-evento` é lido pelo GTM para disparar a conversão de chamada.
+ * Dispara `click_ligacao` no dataLayer via LinkConversao.
  */
 export function BotaoLigar({
   tamanho = "md",
@@ -44,9 +40,9 @@ export function BotaoLigar({
   className = "",
 }: BotaoProps) {
   return (
-    <a
+    <LinkConversao
       href={TELEFONE_HREF}
-      data-evento={EVENTO_LIGACAO}
+      evento={EVENTO_LIGACAO}
       aria-label={`Ligar agora para ${TELEFONE_EXIBICAO}`}
       className={`${base} ${dimensoes[tamanho]} ${
         bloco ? "w-full" : ""
@@ -54,13 +50,13 @@ export function BotaoLigar({
     >
       <Phone size={iconeTamanho[tamanho]} strokeWidth={2.5} aria-hidden="true" />
       {rotulo ?? "Ligar Agora"}
-    </a>
+    </LinkConversao>
   );
 }
 
 /**
  * CTA secundário de WhatsApp. Usa o verde oficial do WhatsApp para
- * reconhecimento imediato do canal.
+ * reconhecimento imediato do canal. Dispara `click_whatsapp`.
  */
 export function BotaoWhatsapp({
   tamanho = "md",
@@ -69,11 +65,11 @@ export function BotaoWhatsapp({
   className = "",
 }: BotaoProps) {
   return (
-    <a
+    <LinkConversao
       href={WHATSAPP_HREF}
+      evento={EVENTO_WHATSAPP}
       target="_blank"
       rel="noopener noreferrer"
-      data-evento={EVENTO_WHATSAPP}
       aria-label="Falar no WhatsApp (abre em nova aba)"
       className={`${base} ${dimensoes[tamanho]} ${
         bloco ? "w-full" : ""
@@ -85,7 +81,7 @@ export function BotaoWhatsapp({
         aria-hidden="true"
       />
       {rotulo ?? "WhatsApp"}
-    </a>
+    </LinkConversao>
   );
 }
 
@@ -100,11 +96,11 @@ export function BotaoWhatsappContorno({
   className = "",
 }: BotaoProps) {
   return (
-    <a
+    <LinkConversao
       href={WHATSAPP_HREF}
+      evento={EVENTO_WHATSAPP}
       target="_blank"
       rel="noopener noreferrer"
-      data-evento={EVENTO_WHATSAPP}
       aria-label="Falar no WhatsApp (abre em nova aba)"
       className={`${base} ${dimensoes[tamanho]} ${
         bloco ? "w-full" : ""
@@ -116,6 +112,6 @@ export function BotaoWhatsappContorno({
         aria-hidden="true"
       />
       {rotulo ?? "WhatsApp"}
-    </a>
+    </LinkConversao>
   );
 }

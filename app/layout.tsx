@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
+import {
+  GoogleTagManager,
+  GoogleTagManagerNoScript,
+} from "@/components/GoogleTagManager";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -75,52 +79,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={poppins.variable}>
-      <head>
-        {/*
-          ==========================================================
-          GOOGLE TAG MANAGER — SNIPPET DO <head>
-          ----------------------------------------------------------
-          Luiz: quando o container ID (GTM-XXXXXXX) estiver pronto,
-          descomente o bloco abaixo e substitua GTM-XXXXXXX.
-
-          Em Next.js 14 o caminho recomendado é o componente <GoogleTagManager />
-          do pacote @next/third-parties (npm i @next/third-parties), que carrega
-          o script de forma otimizada e não prejudica o LCP:
-
-            import { GoogleTagManager } from '@next/third-parties/google'
-            ...
-            <GoogleTagManager gtmId="GTM-XXXXXXX" />
-
-          Alternativa manual (snippet oficial do GTM):
-
-          <Script id="gtm-head" strategy="afterInteractive">
-            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-XXXXXXX');`}
-          </Script>
-          ==========================================================
-        */}
-      </head>
       <body className="font-sans antialiased">
-        {/*
-          ==========================================================
-          GOOGLE TAG MANAGER — SNIPPET DO <body> (noscript)
-          ----------------------------------------------------------
-          Luiz: descomente junto com o bloco do <head> e use o mesmo
-          container ID.
-
-          <noscript>
-            <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-          </noscript>
-          ==========================================================
-        */}
+        {/* Fallback do GTM — precisa ser o primeiro elemento do <body>. */}
+        <GoogleTagManagerNoScript />
+        <GoogleTagManager />
         {children}
       </body>
     </html>

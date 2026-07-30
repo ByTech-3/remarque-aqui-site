@@ -136,15 +136,32 @@ Serviço:            Remarcação de Chassi e Motor (Credenciada DETRAN-PR)
 
 ---
 
-## 6. TRACKING (preparar, mas sem IDs ainda)
+## 6. TRACKING (implementado)
 
-O Luiz vai fornecer os IDs depois. Por ora, deixar o código **preparado** para receber:
+Google Tag Manager instalado com o container **GTM-TH3LVG5X**.
 
-- Google Tag Manager (container ID virá depois) — deixar comentário no `layout.tsx` indicando onde entra o snippet do GTM (`<head>` e `<body>`).
-- Todos os botões de ligação e WhatsApp devem ter atributos que facilitem o tracking por clique, por exemplo:
-  - `data-evento="click_whatsapp"` no botão de WhatsApp
-  - `data-evento="click_ligacao"` no botão de ligar
-- Não implementar dataLayer manualmente ainda — só deixar os data-attributes e o ponto de entrada do GTM prontos.
+- `lib/gtm.ts` — ID do container, nomes dos eventos e `rastrearConversao()`, que
+  faz o `dataLayer.push`.
+- `components/GoogleTagManager.tsx` — os scripts via `next/script`
+  (`beforeInteractive` inicializa o `dataLayer`; `afterInteractive` carrega o
+  GTM) e o `<noscript>` de fallback. Montado no `app/layout.tsx`.
+- `components/LinkConversao.tsx` — **o único Client Component do site**.
+
+### Regra: todo link de conversão passa por `LinkConversao`
+
+Nunca escreva um `<a href={TELEFONE_HREF}>` ou `<a href={WHATSAPP_HREF}>` na
+mão. Use `<LinkConversao evento={EVENTO_LIGACAO}>` / `{EVENTO_WHATSAPP}`. Ele
+aplica o `data-evento` **e** dispara o `dataLayer.push` — assim o rastreamento
+não depende de alguém lembrar de repetir o handler em cada botão novo.
+
+Eventos disparados (contrato com o container; renomear exige ajustar o GTM):
+
+- `click_ligacao` — todo link `tel:`
+- `click_whatsapp` — todo link `wa.me`
+
+O push é síncrono e **não** chama `preventDefault()`: o evento é registrado e o
+usuário segue para o telefone/WhatsApp normalmente. Segurar o clique para
+"garantir" o envio quebraria justamente a conversão que se quer medir.
 
 ---
 

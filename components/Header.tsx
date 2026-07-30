@@ -1,16 +1,13 @@
 import { Phone } from "lucide-react";
 import Logo from "./Logo";
+import LinkConversao from "./LinkConversao";
 import { BotaoLigar } from "./Botoes";
-import {
-  TELEFONE_HREF,
-  TELEFONE_EXIBICAO,
-  EVENTO_LIGACAO,
-} from "@/lib/contato";
+import { TELEFONE_HREF, TELEFONE_EXIBICAO } from "@/lib/contato";
+import { EVENTO_LIGACAO } from "@/lib/gtm";
 
 /**
- * Header fixo. Sem JavaScript: é uma landing de uma dobra só, não há menu de
- * navegação — o único elemento interativo é o CTA de ligação, que fica sempre
- * visível durante a rolagem.
+ * Header fixo. É uma landing de uma dobra só, então não há menu de navegação —
+ * o único elemento interativo é o CTA de ligação, sempre visível na rolagem.
  */
 export default function Header() {
   return (
@@ -22,15 +19,15 @@ export default function Header() {
         <Logo tamanho={52} priority className="hidden sm:flex" />
 
         {/* Mobile: botão compacto, só com o ícone e o número. */}
-        <a
+        <LinkConversao
           href={TELEFONE_HREF}
-          data-evento={EVENTO_LIGACAO}
+          evento={EVENTO_LIGACAO}
           aria-label={`Ligar agora para ${TELEFONE_EXIBICAO}`}
           className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-green px-3.5 py-2.5 text-sm font-bold text-white shadow-cta transition-all duration-200 hover:bg-green-deep active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-lime/60 sm:hidden"
         >
           <Phone size={16} strokeWidth={2.5} aria-hidden="true" />
           Ligar
-        </a>
+        </LinkConversao>
 
         {/* Desktop: CTA completo com o número visível. */}
         <div className="hidden items-center gap-4 sm:flex">
@@ -38,13 +35,13 @@ export default function Header() {
             <span className="block text-[0.65rem] font-medium uppercase tracking-wider text-gray">
               Atendimento imediato
             </span>
-            <a
+            <LinkConversao
               href={TELEFONE_HREF}
-              data-evento={EVENTO_LIGACAO}
+              evento={EVENTO_LIGACAO}
               className="block text-lg font-extrabold text-navy transition-colors hover:text-blue"
             >
               {TELEFONE_EXIBICAO}
-            </a>
+            </LinkConversao>
           </span>
           <BotaoLigar tamanho="md" />
         </div>

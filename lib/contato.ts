@@ -27,6 +27,5 @@ export const LOCALIZACAO_COMPLETA =
   "Em frente ao DETRAN do Tarumã — Curitiba, PR";
 export const CIDADE = "Curitiba, PR";
 
-/** Atributos de tracking lidos pelo Google Tag Manager (ver layout.tsx). */
-export const EVENTO_LIGACAO = "click_ligacao";
-export const EVENTO_WHATSAPP = "click_whatsapp";
+/* Os nomes dos eventos de conversão ficam em `lib/gtm.ts`, junto do
+   disparador do dataLayer. */

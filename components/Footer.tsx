@@ -1,13 +1,13 @@
 import { Phone, MessageCircle, MapPin, ShieldCheck } from "lucide-react";
+import LinkConversao from "./LinkConversao";
 import {
   MARCA,
   TELEFONE_HREF,
   TELEFONE_EXIBICAO,
   WHATSAPP_HREF,
   LOCALIZACAO_COMPLETA,
-  EVENTO_LIGACAO,
-  EVENTO_WHATSAPP,
 } from "@/lib/contato";
+import { EVENTO_LIGACAO, EVENTO_WHATSAPP } from "@/lib/gtm";
 
 export default function Footer() {
   const ano = new Date().getFullYear();
@@ -38,21 +38,21 @@ export default function Footer() {
             </h2>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <a
+                <LinkConversao
                   href={TELEFONE_HREF}
-                  data-evento={EVENTO_LIGACAO}
+                  evento={EVENTO_LIGACAO}
                   className="inline-flex items-center gap-2.5 text-blue-glow transition-colors hover:text-white"
                 >
                   <Phone size={17} strokeWidth={2.3} aria-hidden="true" />
                   {TELEFONE_EXIBICAO}
-                </a>
+                </LinkConversao>
               </li>
               <li>
-                <a
+                <LinkConversao
                   href={WHATSAPP_HREF}
+                  evento={EVENTO_WHATSAPP}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-evento={EVENTO_WHATSAPP}
                   className="inline-flex items-center gap-2.5 text-blue-glow transition-colors hover:text-white"
                 >
                   <MessageCircle
@@ -61,7 +61,7 @@ export default function Footer() {
                     aria-hidden="true"
                   />
                   WhatsApp
-                </a>
+                </LinkConversao>
               </li>
             </ul>
           </div>
